@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — Sam Annand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@12,400;12,500&family=Inclusive+Sans&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0c0b09; --chalk: #ede9e4; --stone: #6e6860;
+    --amber: #b89060; --slate: #1a1815;
+    --yellow: #d6a702;
+    --yellow-dark: #a07e00;
+    --yellow-pale: #f5e27a;
+  }
+  html, body {
+    background: var(--ink); color: var(--chalk);
+    font-family: 'Inclusive Sans', sans-serif;
+    overflow-x: hidden;
+  }
+
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0c0b09; --chalk: #ede9e4; --stone: #6e6860;
+    --amber: #b89060; --slate: #1a1815;
+  }
+  html { height: 100%; }
+  body {
+    height: 100%; background: var(--ink); color: var(--chalk);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 28px 48px;
+    background: #d6a702; border-bottom: 1px solid rgba(12,11,9,0.08);
+  }
+  .nav-logo {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(12,11,9,0.85); text-decoration: none;
+  }
+  .nav-links { display: flex; list-style: none; position: relative; }
+  .nav-item { position: relative; }
+  .nav-item > a {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(12,11,9,0.75); text-decoration: none;
+    transition: color 0.2s; padding: 8px 20px; display: block;
+  }
+  .nav-item > a:hover { opacity: 0.75; }
+
+  /* Dropdowns */
+  .dropdown-wrap {
+    position: absolute; top: 100%; right: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease;
+    min-width: 200px;
+  }
+  .nav-item:hover > .dropdown-wrap {
+    max-height: 400px;
+    overflow: visible;
+    pointer-events: all;
+  }
+  .dropdown {
+    background: #d6a702;
+    padding: 8px 0 12px;
+    pointer-events: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  }
+  .nav-item:hover > .dropdown-wrap .dropdown {
+    pointer-events: all;
+  }
+  .dropdown a {
+    display: block; padding: 10px 20px;
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(12,11,9,0.8); text-decoration: none;
+    transition: color 0.2s, background 0.2s; white-space: nowrap;
+  }
+  .dropdown a:hover {
+    color: rgba(12,11,9,1); background: rgba(12,11,9,0.06);
+  }
+  .dd-section {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(12,11,9,0.45); padding: 12px 20px 4px; display: block;
+  }
+  .dd-divider { height: 1px; background: rgba(12,11,9,0.12); margin: 6px 0; }
+
+  /* ── LAYOUT ── */
+  .hero {
+    height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── LEFT ── */
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 48px 48px 64px;
+    background: #4887c9;
+  }
+  h1.hero-name {
+    font-family: 'Bodoni Moda', Georgia, serif;
+    font-size: clamp(58px, 6.5vw, 105px);
+    font-weight: 400; line-height: 1;
+    letter-spacing: 0em; color: var(--chalk);
+    opacity: 0; animation: fadeUp 1s ease 0.4s forwards;
+    white-space: nowrap;
+  }
+  .hero-role {
+    margin-top: 16px;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    color: rgba(237,233,228,0.45);
+    opacity: 0; animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  /* ── RIGHT: PAINTING ── */
+  .hero-right { position: relative; overflow: hidden; }
+  .painting-wrap {
+    position: absolute; inset: 0;
+    opacity: 0; animation: fadeIn 1.5s ease 0.1s forwards;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .painting-img {
+    width: 100%; height: 100%; object-fit: cover;
+    object-position: 50% 50%; display: block;
+    filter: saturate(0.88) brightness(0.94);
+  }
+  .painting-caption {
+    position: absolute; bottom: 32px; right: 32px;
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(237,233,228,0.35); text-align: right; line-height: 1.8;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  /* Flyout submenus */
+  .flyout-item { position: relative; }
+  .flyout-trigger {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 20px;
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(12,11,9,0.8); text-decoration: none;
+    transition: color 0.2s, background 0.2s; white-space: nowrap;
+    cursor: default;
+  }
+  .flyout-trigger:hover { color: rgba(12,11,9,1); background: rgba(12,11,9,0.06); }
+  .flyout-arrow { opacity: 0.4; margin-left: 12px; font-size: 12px; color: rgba(12,11,9,0.6); }
+  .flyout {
+    position: absolute; left: 100%; top: 0;
+    background: #d6a702;
+    min-width: 190px; padding: 8px 0;
+    box-shadow: 4px 6px 20px rgba(0,0,0,0.4);
+    white-space: nowrap;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.22s ease;
+    pointer-events: none;
+  }
+  .flyout-item:hover > .flyout {
+    clip-path: inset(0 0% 0 0);
+    pointer-events: all;
+  }
+  .flyout a {
+    display: block; padding: 10px 20px;
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(12,11,9,0.8); text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  .flyout a:hover { color: rgba(12,11,9,1); background: rgba(12,11,9,0.06); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 0; }
+    .nav-item > a { padding: 8px 12px; font-size: 9px; letter-spacing: 0.12em; }
+    .dropdown { right: -12px; }
+
+    .hero { grid-template-columns: 1fr; grid-template-rows: 45vh 55vh; }
+    .hero-left {
+      padding: 0 24px 32px;
+      justify-content: flex-end;
+      order: 1;
+    }
+    h1.hero-name { font-size: clamp(42px, 11vw, 72px); white-space: normal; }
+    .hero-role { font-size: 9px; }
+    .hero-right { order: 0; }
+    .painting-caption { font-size: 8px; bottom: 16px; right: 16px; }
+  }
+
+
+
+  /* ── HERO ── */
+  .about-hero {
+    min-height: 100vh;
+    background: #143e1a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 64px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+  .about-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    
+    pointer-events: none;
+  }
+  .about-eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(237,233,228,0.55); margin-bottom: 20px;
+  }
+  .about-name {
+    font-family: 'Bodoni Moda', Georgia, serif;
+    font-size: clamp(64px, 10vw, 140px);
+    font-weight: 400; line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--chalk);
+    margin-bottom: 32px;
+  }
+  .about-tagline {
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 300; line-height: 1.6;
+    color: rgba(237,233,228,0.7);
+    max-width: 620px;
+  }
+  .about-scroll {
+    position: absolute; bottom: 48px; right: 64px;
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(237,233,228,0.35);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .scroll-line { width: 40px; height: 1px; background: rgba(12,11,9,0.2); }
+
+  /* ── INTRO ── */
+  .intro-section {
+    background: #143e1a;
+    padding: 0 64px 80px;
+    border-bottom: 1px solid rgba(237,233,228,0.1);
+  }
+  .intro-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 80px;
+    padding-top: 48px;
+    border-top: 1px solid rgba(237,233,228,0.12);
+  }
+  .intro-text {
+    font-size: 20px; font-weight: 300; line-height: 1.75;
+    color: rgba(237,233,228,0.82);
+  }
+  .intro-text p + p { margin-top: 18px; }
+  .intro-credits {
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .credit-item {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(237,233,228,0.12);
+    display: grid; grid-template-columns: 1fr auto;
+    align-items: baseline; gap: 12px;
+  }
+  .credit-label {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(237,233,228,0.45);
+  }
+  .credit-value {
+    font-size: 13px; font-weight: 300;
+    color: rgba(237,233,228,0.75); text-align: right;
+  }
+
+  /* ── WORKS ── */
+  .works-section {
+    padding: 80px 64px;
+    background: var(--ink);
+  }
+  .works-section .section-label {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 48px; display: block;
+  }
+  .works-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+  .work-item {
+    padding: 32px 28px;
+    background: var(--slate);
+    border-left: 3px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .work-item:hover { border-left-color: var(--yellow); }
+  .work-year {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    letter-spacing: 0.2em; color: var(--yellow);
+    margin-bottom: 10px; display: block;
+  }
+  .work-title {
+    font-size: 18px; font-weight: 300; color: var(--chalk);
+    line-height: 1.3; margin-bottom: 8px;
+  }
+  .work-role {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--stone); margin-bottom: 10px;
+  }
+  .work-desc {
+    font-size: 13px; font-weight: 300; line-height: 1.6;
+    color: rgba(237,233,228,0.55);
+  }
+
+  /* ── MASTERING ── */
+  .mastering-section {
+    padding: 80px 64px;
+    background: var(--yellow);
+    border-top: 1px solid rgba(12,11,9,0.1);
+  }
+  .mastering-section .section-label {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: rgba(237,233,228,0.45); margin-bottom: 48px; display: block;
+  }
+  .mastering-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px;
+  }
+  .mastering-item {
+    padding: 24px 20px;
+    background: rgba(12,11,9,0.06);
+    font-size: 14px; font-weight: 300;
+    color: rgba(12,11,9,0.75); line-height: 1.5;
+  }
+  .mastering-item strong {
+    display: block; font-weight: 400;
+    color: rgba(12,11,9,0.9); margin-bottom: 4px;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-section {
+    padding: 80px 64px;
+    background: var(--ink);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  }
+  .edu-section .section-label {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 32px; display: block;
+  }
+  .edu-item { margin-bottom: 24px; }
+  .edu-title {
+    font-size: 18px; font-weight: 300; color: var(--chalk);
+    margin-bottom: 4px;
+  }
+  .edu-detail {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--stone);
+  }
+  .contact-block { display: flex; flex-direction: column; gap: 16px; }
+  .contact-link {
+    font-size: 16px; font-weight: 300; color: rgba(237,233,228,0.7);
+    text-decoration: none; transition: color 0.3s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .contact-link:hover { color: var(--yellow); }
+  .contact-link span {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--stone); min-width: 80px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 64px;
+    border-top: 1px solid rgba(237,233,228,0.08);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone);
+  }
+  .footer-links { display: flex; gap: 32px; list-style: none; }
+  .footer-links a {
+    font-family: 'Space Mono', monospace; font-size: 9px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--stone); text-decoration: none;
+    transition: color 0.3s;
+  }
+  .footer-links a:hover { color: var(--chalk); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-item > a { padding: 8px 12px; font-size: 9px; }
+    .about-hero { padding: 100px 24px 56px; }
+    .intro-section { padding: 0 24px 56px; }
+    .intro-grid { grid-template-columns: 1fr; gap: 40px; }
+    .works-section, .mastering-section, .edu-section { padding: 56px 24px; }
+    .works-grid { grid-template-columns: 1fr; }
+    .mastering-grid { grid-template-columns: 1fr 1fr; }
+    .edu-section { grid-template-columns: 1fr; gap: 40px; }
+    footer { padding: 24px; flex-direction: column; gap: 16px; text-align: center; }
+  }
+
+  /* ── CV LAYOUT ── */
+  .about-hero {
+    min-height: 100vh;
+    background: #143e1a;
+    padding: 100px 64px 72px;
+    position: relative;
+  }
+  .cv-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 80px;
+    max-width: 1400px;
+  }
+  .about-name {
+    font-family: 'Bodoni Moda', Georgia, serif;
+    font-size: clamp(52px, 6vw, 96px);
+    font-weight: 400; line-height: 0.95;
+    letter-spacing: -0.02em;
+    color: var(--chalk);
+    margin-bottom: 32px;
+    white-space: nowrap;
+  }
+  .cv-bio {
+    font-size: 15px; font-weight: 300; line-height: 1.7;
+    color: rgba(237,233,228,0.65);
+    max-width: 680px;
+  }
+  .cv-bio + .cv-bio { margin-top: 14px; }
+  .cv-contact {
+    margin-top: 32px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .cv-contact-item {
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    letter-spacing: 0.12em; color: rgba(237,233,228,0.45);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .cv-contact-item:hover { color: var(--chalk); }
+  .cv-section { margin-bottom: 40px; }
+  .cv-section-title {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(237,233,228,0.1);
+  }
+  .cv-entry {
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(237,233,228,0.06);
+  }
+  .cv-entry-head {
+    display: flex; justify-content: space-between;
+    align-items: baseline; gap: 12px; margin-bottom: 4px;
+  }
+  .cv-entry-title {
+    font-size: 14px; font-weight: 400; color: var(--chalk);
+  }
+  .cv-entry-year {
+    font-family: 'Space Mono', monospace; font-size: 8px;
+    letter-spacing: 0.15em; color: rgba(237,233,228,0.4);
+    white-space: nowrap;
+  }
+  .cv-entry-desc {
+    font-size: 12px; font-weight: 300; line-height: 1.6;
+    color: rgba(237,233,228,0.5);
+  }
+
+  @media (max-width: 768px) {
+    .about-hero { padding: 100px 24px 56px; }
+    .cv-layout { grid-template-columns: 1fr; gap: 40px; }
+    .about-name { font-size: clamp(48px, 12vw, 72px); white-space: normal; }
+  }
+
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  .about-name {
+    opacity: 0;
+    animation: fadeUp 1.1s ease 0.2s forwards;
+  }
+  .cv-bio:nth-of-type(1) { opacity: 0; animation: fadeIn 1s ease 0.9s forwards; }
+  .cv-bio:nth-of-type(2) { opacity: 0; animation: fadeIn 1s ease 1.15s forwards; }
+  .cv-bio:nth-of-type(3) { opacity: 0; animation: fadeIn 1s ease 1.35s forwards; }
+  .cv-bio:nth-of-type(4) { opacity: 0; animation: fadeIn 1s ease 1.55s forwards; }
+  .cv-bio:nth-of-type(5) { opacity: 0; animation: fadeIn 1s ease 1.75s forwards; }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://annandsam.github.io/home/" class="nav-logo">SA</a>
+  <ul class="nav-links">
+
+    <li class="nav-item"><a href="https://annandsam.github.io/home/">Home</a></li>
+
+    <li class="nav-item">
+      <a href="#">Projects</a>
+      <div class="dropdown-wrap"><div class="dropdown">
+        <a href="https://annandsam.github.io/resono/">Resono</a>
+        <a href="https://annandsam.github.io/macro/">Macro</a>
+        <div class="dd-divider"></div>
+        <div class="flyout-item">
+          <a href="#" class="flyout-trigger">Other <span class="flyout-arrow">›</span></a>
+          <div class="flyout">
+            <a href="https://music.apple.com/gb/album/birds-of-prey-ep/274154965" target="_blank">Architeq</a>
+            <a href="https://samply.app/p/KMazQ1LOe1dKvBTZiBRq" target="_blank">Semi-Precious Stones</a>
+          </div>
+        </div>
+        <div class="flyout-item">
+          <a href="#" class="flyout-trigger">Collaborations <span class="flyout-arrow">›</span></a>
+          <div class="flyout">
+            <a href="https://www.sionparkinson.com/perfumes-2" target="_blank">Si&#244;n Parkinson</a>
+          </div>
+        </div>
+      </div></div>
+    </li>
+
+    <li class="nav-item"><a href="https://samannand.bandcamp.com" target="_blank">Bandcamp</a></li>
+    <li class="nav-item"><a href="https://annandsam.github.io/home/mastering.html">Mastering</a></li>
+    <li class="nav-item"><a href="https://annandsam.github.io/home/about.html">About</a></li>
+    <li class="nav-item"><a href="https://annandsam.github.io/home/contact.html">Contact</a></li>
+
+  </ul>
+</nav>
+
+
+<!-- HERO -->
+<section class="about-hero">
+  <div class="cv-layout">
+    <div class="cv-left">
+      <h1 class="about-name">Sam Annand</h1>
+      <p class="cv-bio">Sam Annand is a sound artist, composer and mastering engineer based in Fife, Scotland. His practice spans two decades and moves between disciplines — composition, acoustic field work, modular synthesis, mastering — united by a sustained curiosity about the relationship between sound and space.</p>
+      <p class="cv-bio">From 2008 to 2011 he recorded and released music as Architeq with Tirk Recordings, London, performing at the Queen Elizabeth Hall and Fondation Vasarely, Aix-en-Provence, with work appearing in campaigns by Stella McCartney, Adidas, Apple, BBC and Sony PlayStation.</p>
+      <p class="cv-bio">Since 2012 he has worked as a mastering engineer, building close working relationships with independent record labels and artists.</p>
+      <p class="cv-bio">In 2016 he led the composition and production of Resono — a New Media Scotland-funded project using impulse responses of extreme reverberant spaces across Scotland to create music made bespoke to each environment. The project was featured on BBC Radio 3 Night Tracks, 6Music, BBC Radio Scotland and The Times.</p>
+      <p class="cv-bio">He is currently developing Macro — a Creative Scotland-funded body of compositions in a macrotonal tuning system of his own invention, written for a small ensemble of voice, harp, strings and woodwind.</p>
+      </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+<footer>
+  <div class="footer-copy">Sam Annand · Fife, Scotland</div>
+  <ul class="footer-links">
+    <li><a href="https://annandsam.github.io/home/">Home</a></li>
+    <li><a href="https://samannand.bandcamp.com" target="_blank">Bandcamp</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
