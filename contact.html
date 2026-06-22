@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sam Annand — Contact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@12,400;12,500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #111111;
+  --white: #ffffff;
+  --border: 2px solid #111111;
+  --border-thin: 1px solid rgba(17,17,17,0.2);
+  --yellow: #c4501a;
+}
+
+html, body { height: 100%; }
+
+body {
+  background: #c4501a;
+  padding: 12px;
+  min-height: 100vh;
+  font-family: 'Space Mono', monospace;
+}
+
+.site-wrap {
+  height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+  background: #c4501a;
+  border-radius: 18px;
+  border: var(--border);
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-mask-image: -webkit-radial-gradient(white, white);
+  mask-image: radial-gradient(white, white);
+}
+
+/* ── NAV ── */
+nav {
+  display: flex;
+  align-items: stretch;
+  border-bottom: var(--border);
+  border-radius: 16px 16px 0 0;
+  position: relative;
+  background: var(--white);
+  flex-shrink: 0;
+}
+
+.nav-logo {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  padding: 22px 28px;
+  border-right: var(--border);
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  flex: 1;
+}
+
+.nav-item { position: relative; flex: 1; }
+
+.nav-item > a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 22px 22px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  border-right: var(--border);
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.nav-item:last-child > a { border-right: none; }
+.nav-item > a:hover { background: var(--yellow); color: var(--white); }
+
+.dropdown-wrap {
+  position: absolute;
+  top: 100%;
+  left: -2px;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+  width: calc(var(--dropdown-w, 200px) + 2px);
+  z-index: 100;
+}
+
+.nav-item:hover > .dropdown-wrap {
+  max-height: 400px;
+  overflow: visible;
+  pointer-events: all;
+}
+
+.dropdown {
+  background: var(--white);
+  border: var(--border);
+  pointer-events: none;
+}
+
+.nav-item:hover > .dropdown-wrap .dropdown { pointer-events: all; }
+
+.dropdown a {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  border-bottom: var(--border);
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.dropdown a:last-child { border-bottom: none; }
+.dropdown a:hover { background: var(--yellow); color: var(--white); }
+.dd-divider { display: none; }
+
+.flyout-item { position: relative; }
+
+.flyout-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  border-bottom: var(--border);
+  cursor: default;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.flyout-item:last-child > .flyout-trigger { border-bottom: none; }
+.flyout-trigger:hover { background: var(--yellow); color: var(--white); }
+.flyout-arrow { opacity: 0.5; margin-left: 12px; font-size: 9px; }
+
+.flyout {
+  position: absolute;
+  left: 100%;
+  top: -2px;
+  background: var(--white);
+  border: var(--border);
+  width: calc(var(--flyout-w, 200px) + 2px);
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.22s ease;
+  pointer-events: none;
+}
+
+.flyout-item:hover > .flyout { clip-path: inset(0 0% 0 0); pointer-events: all; }
+
+.flyout a {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 20px;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--black);
+  text-decoration: none;
+  border-bottom: var(--border);
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.flyout a:last-child { border-bottom: none; }
+.flyout a:hover { background: var(--yellow); color: var(--white); }
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 22px 24px;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 300;
+  margin-left: auto;
+  border-left: var(--border);
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--black);
+  transition: transform 0.25s, opacity 0.25s;
+  transform-origin: center;
+}
+
+nav.nav-open .nav-hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+nav.nav-open .nav-hamburger span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+nav.nav-open .nav-hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── PAGE CONTENT ── */
+.page-content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: #3d1f0a;
+  display: flex;
+  min-height: 0;
+}
+
+#marble-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+.page-wrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 72px 48px;
+  overflow-y: auto;
+}
+
+.contact-panel {
+  max-width: 580px; width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  opacity: 0;
+  animation: fadeUp 1s ease 0.5s forwards;
+}
+
+.contact-heading {
+  font-family: 'Bodoni Moda', Georgia, serif;
+  font-size: clamp(36px, 4.5vw, 64px);
+  font-weight: 400; line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: #ede9e4;
+  margin-bottom: 48px;
+}
+
+/* Form */
+.contact-form { display: flex; flex-direction: column; gap: 0; }
+.field-row { display: flex; flex-direction: column; margin-bottom: 24px; }
+.field-row label {
+  font-family: 'Space Mono', monospace;
+  font-size: 8px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: rgba(237,233,228,0.5);
+  margin-bottom: 10px;
+}
+.field-row input,
+.field-row textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(237,233,228,0.3);
+  padding: 12px 0 12px;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px; letter-spacing: 0.04em;
+  color: var(--white);
+  outline: none;
+  transition: border-color 0.25s;
+  width: 100%;
+  resize: none;
+  -webkit-appearance: none;
+}
+.field-row input:focus,
+.field-row textarea:focus {
+  border-bottom-color: rgba(237,233,228,0.8);
+}
+.field-row input::placeholder,
+.field-row textarea::placeholder {
+  color: rgba(237,233,228,0.28);
+}
+.field-row textarea { min-height: 110px; line-height: 1.7; }
+
+.submit-row { margin-top: 8px; }
+.submit-btn {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
+  color: #111111;
+  background: #ede9e4;
+  border: var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 16px 40px;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.submit-btn:hover {
+  background: var(--yellow);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+.submit-btn:active { transform: translateY(0); }
+
+/* Success message */
+.success-msg {
+  display: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 10px; letter-spacing: 0.12em;
+  color: rgba(237,233,228,0.75);
+  margin-top: 24px;
+  line-height: 1.8;
+}
+.success-msg.visible { display: block; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  body { padding: 8px; }
+  .page-wrap { padding: 56px 28px; }
+  .contact-heading { font-size: clamp(30px, 9vw, 52px); }
+}
+
+@media (max-width: 640px) {
+  body { padding: 6px; }
+  nav { flex-wrap: wrap; }
+  .nav-hamburger { display: flex; }
+
+  .nav-links {
+    display: none !important;
+    position: absolute;
+    top: 100%;
+    left: -2px;
+    right: -2px;
+    background: var(--white);
+    flex-direction: column !important;
+    border: var(--border);
+    z-index: 250;
+  }
+
+  nav.nav-open .nav-links { display: flex !important; }
+
+  .nav-item { width: 100%; }
+  .nav-item > a {
+    padding: 16px 22px !important;
+    font-size: 10px !important;
+    border-right: none !important;
+    border-bottom: var(--border) !important;
+    height: auto !important;
+  }
+
+  .dropdown-wrap {
+    position: static !important;
+    width: auto !important;
+    max-height: 0 !important;
+    overflow: hidden !important;
+    transition: max-height 0.35s ease !important;
+  }
+  .dropdown-wrap.mob-open { max-height: 700px !important; overflow: visible !important; }
+
+  .dropdown { border: none !important; }
+  .dropdown a { padding-left: 36px !important; }
+
+  .flyout { position: static !important; width: auto !important; clip-path: none !important; display: none; border: none !important; }
+  .flyout-item.mob-open > .flyout { display: block; pointer-events: all; }
+  .flyout a { padding-left: 52px !important; }
+  .flyout a:last-child { border-bottom: var(--border) !important; }
+  .flyout-trigger { border-bottom: var(--border) !important; }
+  .nav-item:last-child > a { border-bottom: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="site-wrap">
+
+  <nav>
+    <a href="https://annandsam.github.io/home/" class="nav-logo">Sam Annand</a>
+    <button class="nav-hamburger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li class="nav-item"><a href="https://annandsam.github.io/home/">Home</a></li>
+      <li class="nav-item">
+        <a href="#">Projects</a>
+        <div class="dropdown-wrap"><div class="dropdown">
+          <a href="https://annandsam.github.io/resono/">Resono</a>
+          <a href="https://annandsam.github.io/macro/">Macro</a>
+          <div class="dd-divider"></div>
+          <div class="flyout-item">
+            <a href="#" class="flyout-trigger">Other <span class="flyout-arrow">&#8250;</span></a>
+            <div class="flyout">
+              <a href="https://music.apple.com/gb/album/birds-of-prey-ep/274154965" target="_blank">Architeq</a>
+              <a href="https://samply.app/p/KMazQ1LOe1dKvBTZiBRq" target="_blank">Semi-Precious Stones</a>
+            </div>
+          </div>
+          <div class="flyout-item">
+            <a href="#" class="flyout-trigger">Collaborations <span class="flyout-arrow">&#8250;</span></a>
+            <div class="flyout">
+              <a href="https://www.sionparkinson.com/perfumes-2" target="_blank">Si&#244;n Parkinson</a>
+            </div>
+          </div>
+        </div></div>
+      </li>
+      <li class="nav-item"><a href="https://samannand.bandcamp.com" target="_blank">Bandcamp</a></li>
+      <li class="nav-item"><a href="https://annandsam.github.io/home/mastering.html">Mastering</a></li>
+      <li class="nav-item"><a href="about.html">About</a></li>
+      <li class="nav-item"><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-content">
+    <canvas id="marble-canvas"></canvas>
+    <div class="page-wrap">
+      <div class="contact-panel">
+        <h1 class="contact-heading">Contact</h1>
+
+        <div class="contact-form">
+          <div class="field-row">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" autocomplete="off">
+          </div>
+          <div class="field-row">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="your@email.com" autocomplete="off">
+          </div>
+          <div class="field-row">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" autocomplete="off">
+          </div>
+          <div class="field-row">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Your message..."></textarea>
+          </div>
+          <div class="submit-row">
+            <button class="submit-btn" id="submit-btn" type="button">Send message</button>
+          </div>
+          <div class="success-msg" id="success-msg">
+            Message received, I'll be in touch.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+document.getElementById('submit-btn').addEventListener('click', function() {
+  var name    = document.getElementById('name').value.trim();
+  var email   = document.getElementById('email').value.trim();
+  var subject = document.getElementById('subject').value.trim();
+  var message = document.getElementById('message').value.trim();
+  if (!name || !email || !message) return;
+
+  var u = 'sam_annand';
+  var d = 'hotmail.com';
+  var body = 'Name: ' + name + '\nEmail: ' + email + '\n\n' + message;
+  var mailtoLink = 'mailto:' + u + '@' + d
+    + '?subject=' + encodeURIComponent(subject || '(No subject)')
+    + '&body='    + encodeURIComponent(body);
+
+  window.location.href = mailtoLink;
+
+  document.getElementById('success-msg').classList.add('visible');
+});
+
+(function() {
+  var canvas = document.getElementById('marble-canvas');
+  if (!canvas) return;
+  var gl = canvas.getContext('webgl', { alpha: false, antialias: false })
+         || canvas.getContext('experimental-webgl', { alpha: false });
+  if (!gl) return;
+
+  function resize() {
+    var p   = canvas.parentElement;
+    var dpr = window.devicePixelRatio || 1;
+    var w   = p.clientWidth;
+    var h   = p.clientHeight;
+    canvas.width  = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width  = w + 'px';
+    canvas.style.height = h + 'px';
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function makeShader(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    return s;
+  }
+  function makeProgram(vs, fs) {
+    var p = gl.createProgram();
+    gl.attachShader(p, makeShader(gl.VERTEX_SHADER,   vs));
+    gl.attachShader(p, makeShader(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(p);
+    return p;
+  }
+
+  var VS = "attribute vec2 a_pos;\nvoid main() { gl_Position = vec4(a_pos, 0.0, 1.0); }";
+  var FS = [
+    "precision mediump float;",
+    "uniform vec2  u_res;",
+    "uniform float u_bx[25];",
+    "uniform float u_by[25];",
+    "uniform float u_br[25];",
+    "void main() {",
+    "  vec2 uv = vec2(gl_FragCoord.x / u_res.y, gl_FragCoord.y / u_res.y);",
+    "  float f0=0.,f1=0.,f2=0.,f3=0.,f4=0.;",
+    "  { float dx=uv.x-u_bx[0]; float dy=uv.y-u_by[0]; f0+=u_br[0]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[1]; float dy=uv.y-u_by[1]; f0+=u_br[1]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[2]; float dy=uv.y-u_by[2]; f0+=u_br[2]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[3]; float dy=uv.y-u_by[3]; f0+=u_br[3]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[4]; float dy=uv.y-u_by[4]; f0+=u_br[4]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[5]; float dy=uv.y-u_by[5]; f1+=u_br[5]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[6]; float dy=uv.y-u_by[6]; f1+=u_br[6]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[7]; float dy=uv.y-u_by[7]; f1+=u_br[7]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[8]; float dy=uv.y-u_by[8]; f1+=u_br[8]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[9]; float dy=uv.y-u_by[9]; f1+=u_br[9]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[10]; float dy=uv.y-u_by[10]; f2+=u_br[10]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[11]; float dy=uv.y-u_by[11]; f2+=u_br[11]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[12]; float dy=uv.y-u_by[12]; f2+=u_br[12]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[13]; float dy=uv.y-u_by[13]; f2+=u_br[13]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[14]; float dy=uv.y-u_by[14]; f2+=u_br[14]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[15]; float dy=uv.y-u_by[15]; f3+=u_br[15]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[16]; float dy=uv.y-u_by[16]; f3+=u_br[16]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[17]; float dy=uv.y-u_by[17]; f3+=u_br[17]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[18]; float dy=uv.y-u_by[18]; f3+=u_br[18]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[19]; float dy=uv.y-u_by[19]; f3+=u_br[19]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[20]; float dy=uv.y-u_by[20]; f4+=u_br[20]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[21]; float dy=uv.y-u_by[21]; f4+=u_br[21]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[22]; float dy=uv.y-u_by[22]; f4+=u_br[22]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[23]; float dy=uv.y-u_by[23]; f4+=u_br[23]/(dx*dx+dy*dy+0.0002); }",
+    "  { float dx=uv.x-u_bx[24]; float dy=uv.y-u_by[24]; f4+=u_br[24]/(dx*dx+dy*dy+0.0002); }",
+    "  vec3 col = vec3(0.239, 0.122, 0.039);",
+    "  float total = f0+f1+f2+f3+f4;",
+    "  if (total >= 1.0) {",
+    "    float m = f0; col = vec3(0.239, 0.122, 0.039);",
+    "    if (f1 > m) { m=f1; col=vec3(0.769, 0.314, 0.102); }",
+    "    if (f2 > m) { m=f2; col=vec3(0.706, 0.173, 0.118); }",
+    "    if (f3 > m) { m=f3; col=vec3(0.784, 0.584, 0.055); }",
+    "    if (f4 > m) {       col=vec3(0.706, 0.173, 0.118); }",
+    "  }",
+    "  gl_FragColor = vec4(col, 1.0);",
+    "}"
+  ].join("\n");
+
+  var prog = makeProgram(VS, FS);
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+
+  var aPos = gl.getAttribLocation(prog, 'a_pos');
+  var uRes = gl.getUniformLocation(prog, 'u_res');
+  var uBX  = gl.getUniformLocation(prog, 'u_bx');
+  var uBY  = gl.getUniformLocation(prog, 'u_by');
+  var uBR  = gl.getUniformLocation(prog, 'u_br');
+
+  var N = 25;
+  var px=new Float32Array(N), py=new Float32Array(N);
+  var vx=new Float32Array(N), vy=new Float32Array(N);
+  var hx=new Float32Array(N), hy=new Float32Array(N);
+  var br=new Float32Array(N), ph=new Float32Array(N);
+
+  var seed = 77531;
+  function rng() { seed = ((seed*1664525)+1013904223)>>>0; return seed/4294967296; }
+
+  for (var i=0; i<N; i++) {
+    hx[i]=0.08+rng()*0.84; hy[i]=0.06+rng()*0.88;
+    px[i]=hx[i]; py[i]=hy[i]; ph[i]=rng()*6.2832;
+    var g = i%5;
+    br[i] = g<2 ? 0.036+rng()*0.019 : g<4 ? 0.014+rng()*0.010 : 0.004+rng()*0.005;
+  }
+
+  var DAMP=0.9998, SPRING=0.0000008, MOUSE_R=0.30, MOUSE_F=0.0004, DRIFT=0.00000008;
+  var mx=-1, my=-1;
+  function onMove(cx, cy) {
+    var r = canvas.getBoundingClientRect();
+    mx = (cx - r.left) / r.width;
+    my = 1 - (cy - r.top) / r.height;
+  }
+  window.addEventListener('mousemove', function(e){ onMove(e.clientX, e.clientY); });
+  window.addEventListener('mouseleave', function(){ mx=-1; });
+  window.addEventListener('touchmove', function(e){ onMove(e.touches[0].clientX, e.touches[0].clientY); }, {passive:true});
+  window.addEventListener('touchend', function(){ mx=-1; });
+
+  var pxScaled = new Float32Array(N);
+  var t0=performance.now();
+  function update(t) {
+    for(var i=0;i<N;i++){
+      vx[i]+=(hx[i]-px[i])*SPRING; vy[i]+=(hy[i]-py[i])*SPRING;
+      vx[i]+=Math.sin(t*0.000130+ph[i])*DRIFT;
+      vy[i]+=Math.cos(t*0.000098+ph[i]+1.9)*DRIFT;
+      if(mx>=0){var dx=px[i]-mx,dy=py[i]-my,d2=dx*dx+dy*dy;
+        if(d2<MOUSE_R*MOUSE_R){var d=Math.sqrt(d2)+0.001,f=(1-d/MOUSE_R)*(1-d/MOUSE_R)*MOUSE_F;vx[i]+=dx/d*f;vy[i]+=dy/d*f;}}
+      vx[i]*=DAMP;vy[i]*=DAMP;px[i]+=vx[i];py[i]+=vy[i];
+      if(px[i]<0.04){px[i]=0.04;vx[i]=Math.abs(vx[i])*0.3;}
+      if(px[i]>0.96){px[i]=0.96;vx[i]=-Math.abs(vx[i])*0.3;}
+      if(py[i]<0.04){py[i]=0.04;vy[i]=Math.abs(vy[i])*0.3;}
+      if(py[i]>0.96){py[i]=0.96;vy[i]=-Math.abs(vy[i])*0.3;}
+    }
+  }
+  function render(){
+    update(performance.now()-t0);
+    var aspect = canvas.width / canvas.height;
+    for(var i=0;i<N;i++){ pxScaled[i]=px[i]*aspect; }
+    gl.viewport(0,0,canvas.width,canvas.height);
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+    gl.enableVertexAttribArray(aPos);
+    gl.vertexAttribPointer(aPos,2,gl.FLOAT,false,0,0);
+    gl.uniform2f(uRes,canvas.width,canvas.height);
+    gl.uniform1fv(uBX,pxScaled); gl.uniform1fv(uBY,py); gl.uniform1fv(uBR,br);
+    gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+    requestAnimationFrame(render);
+  }
+  render();
+})();
+</script>
+
+<script>
+(function() {
+  function syncMenuWidths() {
+    var items = document.querySelectorAll('.nav-links .nav-item');
+    if (items.length < 3) return;
+    var projW = items[1].getBoundingClientRect().width;
+    var bandW = items[2].getBoundingClientRect().width;
+    document.documentElement.style.setProperty('--dropdown-w', projW + 'px');
+    document.documentElement.style.setProperty('--flyout-w',   bandW + 'px');
+  }
+  syncMenuWidths();
+  window.addEventListener('resize', syncMenuWidths);
+})();
+
+(function() {
+  var nav    = document.querySelector('nav');
+  var burger = document.querySelector('.nav-hamburger');
+  if (!burger || !nav) return;
+
+  burger.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = nav.classList.toggle('nav-open');
+    burger.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  var ddWrap = document.querySelector('.dropdown-wrap');
+  if (ddWrap) {
+    var ddItem = ddWrap.closest('.nav-item');
+    var ddLink = ddItem ? ddItem.querySelector(':scope > a') : null;
+    if (ddLink) {
+      ddLink.addEventListener('click', function(e) {
+        if (window.innerWidth <= 640) {
+          e.preventDefault(); e.stopPropagation();
+          ddWrap.classList.toggle('mob-open');
+        }
+      });
+    }
+  }
+
+  document.querySelectorAll('.flyout-item').forEach(function(fi) {
+    var trigger = fi.querySelector('.flyout-trigger');
+    var flyout  = fi.querySelector('.flyout');
+    if (trigger && flyout) {
+      trigger.addEventListener('click', function(e) {
+        if (window.innerWidth <= 640) {
+          e.preventDefault(); e.stopPropagation();
+          fi.classList.toggle('mob-open');
+        }
+      });
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!nav.contains(e.target)) {
+      nav.classList.remove('nav-open');
+      burger.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    if (a.getAttribute('href') !== '#') {
+      a.addEventListener('click', function() {
+        nav.classList.remove('nav-open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
